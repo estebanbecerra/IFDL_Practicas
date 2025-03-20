@@ -1,18 +1,18 @@
-Tiempo de entrenamiento: 85.90 segundos
+Training Time: 7.71 seconds
 
-Resumen del perfilado:
+Profiling Summary:
 -------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
                                                    Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg       CPU Mem  Self CPU Mem    # of Calls  
 -------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
-                        compile_fx_inner (dynamo_timed)         1.60%        1.367s        87.19%       74.580s       37.290s           0 b      -9.86 Kb             2  
-             GraphLowering.compile_to_fn (dynamo_timed)         0.00%     141.662us        83.53%       71.452s       35.726s           0 b           0 b             2  
-         GraphLowering.compile_to_module (dynamo_timed)         0.00%       4.062ms        83.53%       71.452s       35.726s           0 b           0 b             2  
-autograd::engine::evaluate_function: CompiledFunctio...         0.00%      71.348us        51.69%       44.219s       44.219s    -954.71 Mb    -250.00 Kb             1  
-                               CompiledFunctionBackward         2.55%        2.178s        51.69%       44.219s       44.219s    -954.46 Mb      -1.31 Gb             1  
-                 backward._backward_impl (dynamo_timed)         0.00%     161.354us        45.70%       39.095s       39.095s           0 b           0 b             1  
-         compile_fx.<locals>.bw_compiler (dynamo_timed)         0.00%     340.378us        45.70%       39.095s       39.095s           0 b           0 b             1  
-            PyCodeCache.load_by_key_path (dynamo_timed)         0.15%     125.193ms        44.48%       38.046s       19.023s           0 b           0 b             2  
-                  _compile.compile_inner (dynamo_timed)         0.74%     630.914ms        44.38%       37.965s       37.965s           0 b           0 b             1  
-                      async_compile.wait (dynamo_timed)        44.33%       37.921s        44.33%       37.921s       18.960s           0 b           0 b             2  
+                                           aten::conv2d         0.02%       1.282ms        61.63%        4.677s      89.936ms       1.27 Gb           0 b            52  
+autograd::engine::evaluate_function: ConvolutionBack...         0.52%      39.590ms        47.29%        3.588s     138.016ms    -624.64 Mb   -1010.17 Mb            26  
+                                   ConvolutionBackward0         0.01%     808.304us        46.70%        3.544s     136.289ms     385.53 Mb           0 b            26  
+                             aten::convolution_backward        46.66%        3.541s        46.69%        3.543s     136.258ms     385.53 Mb           0 b            26  
+                                      aten::convolution         0.02%       1.668ms        30.53%        2.316s      89.093ms     632.17 Mb           0 b            26  
+                                     aten::_convolution         0.01%     538.615us        30.51%        2.315s      89.029ms     632.17 Mb           0 b            26  
+                               aten::mkldnn_convolution        30.48%        2.313s        30.50%        2.314s      89.008ms     632.17 Mb           0 b            26  
+                                       aten::max_pool2d         0.00%      56.732us        10.92%     828.319ms     276.106ms     403.05 Mb           0 b             3  
+                          aten::max_pool2d_with_indices        10.92%     828.262ms        10.92%     828.262ms     276.087ms     403.05 Mb     403.05 Mb             3  
+     autograd::engine::evaluate_function: ReluBackward0         0.65%      49.640ms         3.11%     236.073ms       9.080ms    -632.17 Mb      -1.23 Gb            26  
 -------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
-Self CPU time total: 85.541s
+Self CPU time total: 7.588s

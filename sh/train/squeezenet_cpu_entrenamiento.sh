@@ -6,9 +6,9 @@
 #SBATCH --ntasks=1             # Número de tareas
 #SBATCH --time=04:00:00        # Tiempo máximo de ejecución
 #SBATCH --job-name=squeezenet_cpu # Nombre del job
-#SBATCH --output=/home/iruizchicano/IFDL/outputs/train/squeezenet_cpu_%j.log # Archivo de salida
+#SBATCH --output=../../outputs/train/squeezenet_cpu_%j.log # Archivo de salida
 
 # Ejecutar el código Python dentro del contenedor Apptainer
 apptainer exec --writable-tmpfs --nv /software/singularity/Informatica/mia-idl-apptainer/mia_idl_2.1.sif \
-    accelerate launch --config_file /home/iruizchicano/IFDL/config/config_cpubase.yaml \
-    /home/iruizchicano/IFDL/scripts/train/entrenamiento_squeezenet_cpu.py
+    accelerate launch --config_file ../../config/config_cpubase.yaml \
+    ../../scripts/train/entrenamiento_squeezenet_cpu.py
