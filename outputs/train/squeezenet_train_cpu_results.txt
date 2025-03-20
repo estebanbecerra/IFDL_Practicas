@@ -1,0 +1,18 @@
+Tiempo de entrenamiento: 85.90 segundos
+
+Resumen del perfilado:
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg       CPU Mem  Self CPU Mem    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                        compile_fx_inner (dynamo_timed)         1.60%        1.367s        87.19%       74.580s       37.290s           0 b      -9.86 Kb             2  
+             GraphLowering.compile_to_fn (dynamo_timed)         0.00%     141.662us        83.53%       71.452s       35.726s           0 b           0 b             2  
+         GraphLowering.compile_to_module (dynamo_timed)         0.00%       4.062ms        83.53%       71.452s       35.726s           0 b           0 b             2  
+autograd::engine::evaluate_function: CompiledFunctio...         0.00%      71.348us        51.69%       44.219s       44.219s    -954.71 Mb    -250.00 Kb             1  
+                               CompiledFunctionBackward         2.55%        2.178s        51.69%       44.219s       44.219s    -954.46 Mb      -1.31 Gb             1  
+                 backward._backward_impl (dynamo_timed)         0.00%     161.354us        45.70%       39.095s       39.095s           0 b           0 b             1  
+         compile_fx.<locals>.bw_compiler (dynamo_timed)         0.00%     340.378us        45.70%       39.095s       39.095s           0 b           0 b             1  
+            PyCodeCache.load_by_key_path (dynamo_timed)         0.15%     125.193ms        44.48%       38.046s       19.023s           0 b           0 b             2  
+                  _compile.compile_inner (dynamo_timed)         0.74%     630.914ms        44.38%       37.965s       37.965s           0 b           0 b             1  
+                      async_compile.wait (dynamo_timed)        44.33%       37.921s        44.33%       37.921s       18.960s           0 b           0 b             2  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 85.541s
