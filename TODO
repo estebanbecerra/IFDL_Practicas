@@ -1,0 +1,3 @@
+1. Ejecutar VGG16 cpu
+2. Modificar y adaptar VGG16 GPU y ejecutarlo
+3. Modificar y adaptar los ficheros de inferencia y ejecutarlos
