@@ -8,7 +8,7 @@ import torch.optim as optim
 import yaml
 import time
 
-with open("../../config/config_gpubase.yaml", "r") as f:
+with open("/home/estebanbecerraf/config/config_gpubase.yaml", "r") as f:
     config = yaml.safe_load(f)
 
 # Define experiment parameters directly in the script
@@ -77,7 +77,7 @@ torch.cuda.empty_cache()
 train_time = time.time() - start_time
 
 # Save results
-output_file = "../../outputs/train/squeezenet_train_gpu_results.txt"
+output_file = "/home/estebanbecerraf/outputs/train/squeezenet_train_gpu_results.txt"
 with open(output_file, "w") as f:
     f.write(f"Training Time: {train_time:.2f} seconds\n")
     f.write("\nProfiling Summary:\n")
