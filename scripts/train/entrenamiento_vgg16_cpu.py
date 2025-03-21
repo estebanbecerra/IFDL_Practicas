@@ -12,57 +12,70 @@ import time
 # Cargar configuración desde YAML
 with open("config_cpubase.yaml", "r") as f:
     config = yaml.safe_load(f)
+    
+# Load the model
+model = models.vgg16(weights='VGG16_Weights.IMAGENET1K_V1')  # Updated 'pretrained' to 'weights'
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001)
 
-dataset_path = config.get("dataset_path", "./data")
-batch_size = config.get("batch_size", 32)
+# Image transformations
+transform = transforms.Compose([
+    transforms.Resize((224, 224)),
+    transforms.ToTensor(),
+    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+])
 
-# Inicializar `Accelerator` con configuración para CPU
+# Define general experiment parameters
+dataset_path = "./data"
+batch_size = 128  # Reduced for RAM and CPU
+num_epochs = 1    # Minimum for quick execution
+num_classes = 10
+
+# Generate synthetic dataset with random images and labels
+input_images = torch.rand((batch_size, 3, 224, 224))  # Random image batch
+labels = torch.randint(0, num_classes, (batch_size,))  # Random labels for 10 classes
+
+dataset = TensorDataset(input_images, labels)
+dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=2)  # Added num_workers for CPU
+
+# Initialize Accelerator explicitly for CPU
 profiler_kwargs = ProfileKwargs(
     activities=["cpu"],
     record_shapes=True,
     profile_memory=True
 )
 accelerator = Accelerator(cpu=True, kwargs_handlers=[profiler_kwargs])
-device = accelerator.device
 
-# Transformaciones de imagen
-transform = transforms.Compose([
-    transforms.Resize((224, 224)),
-    transforms.ToTensor(),
-])
+# Prepare model, optimizer, and dataloader for CPU execution
+model, optimizer, dataloader = accelerator.prepare(model, optimizer, dataloader)
 
-# Cargar CIFAR-10
-train_dataset = datasets.CIFAR10(root=dataset_path, train=True, transform=transform, download=True)
-train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=4, pin_memory=True, drop_last=True)
+model.train()
+device = accelerator.device  # Will be 'cpu'
 
-# Cargar modelo
-vgg16 = models.vgg16(pretrained=True).to(device)
-
-# Definir pérdida y optimizador
-criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(vgg16.parameters(), lr=0.001)
-
-# Preparar con Accelerate
-train_loader, optimizer, vgg16 = accelerator.prepare(train_loader, optimizer, vgg16)
-
-# Entrenamiento
-num_epochs = 1
+# Measure training time
 start_time = time.time()
 
+# Training loop with profiling
 with accelerator.profile() as prof:
     for epoch in range(num_epochs):
-        for X, y in train_loader:
+        running_loss = 0.0
+        for inputs, targets in dataloader:
+            inputs, targets = inputs.to(device), targets.to(device)
             optimizer.zero_grad()
-            outputs = vgg16(X)
-            loss = criterion(outputs, y)
-            accelerator.backward(loss)
+            outputs = model(inputs)
+            loss = criterion(outputs, targets)
+            accelerator.backward(loss)  # Use accelerator.backward instead of loss.backward()
             optimizer.step()
+            running_loss += loss.item()
+        print(f"Epoch {epoch+1}, Loss: {running_loss/len(dataloader):.4f}")
 
-# Medir tiempo
 train_time = time.time() - start_time
 
-# Guardar resultados
-with open("vgg16_train_cpu_results.txt", "w") as f:
-    f.write(f"Tiempo de entrenamiento: {train_time:.2f} segundos\n")
-    f.write("\nResumen del perfilado:\n")
+# Save results
+output_file = "../../outputs/train/vgg16_train_cpu_results.txt"
+with open(output_file, "w") as f:
+    f.write(f"Training Time: {train_time:.2f} seconds\n")
+    f.write("\nProfiling Summary:\n")
     f.write(prof.key_averages().table(sort_by="cpu_time_total", row_limit=10))
+
+print(f"Training completed. Results saved to {output_file}")
