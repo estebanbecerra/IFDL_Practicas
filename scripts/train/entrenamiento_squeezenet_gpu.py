@@ -2,69 +2,85 @@ import torch
 import torchvision.models as models
 from accelerate import Accelerator, ProfileKwargs
 import torchvision.transforms as transforms
-from torch.utils.data import DataLoader
-import torchvision.datasets as datasets
+from torch.utils.data import DataLoader, TensorDataset
 import torch.nn as nn
 import torch.optim as optim
 import yaml
 import time
 
-# Cargar configuración desde YAML
-with open("config_gpubase.yaml", "r") as f:
+with open("../../config/config_gpubase.yaml", "r") as f:
     config = yaml.safe_load(f)
 
-dataset_path = config.get("dataset_path", "./data")
-batch_size = config.get("batch_size", 32)
+# Define experiment parameters directly in the script
+batch_size = 128      
+num_epochs = 1        
+num_classes = 10     
+dataset_path = "./data"  
 
-# Inicializar `Accelerator` con configuración para GPU
+# Enable cuDNN autotuner for performance
+torch.backends.cudnn.benchmark = True
+
+# Image transformations (incluye normalización típica de ImageNet)
+transform = transforms.Compose([
+    transforms.Resize((224, 224)),
+    transforms.ToTensor(),
+    transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                         std=[0.229, 0.224, 0.225])
+])
+
+# Generate synthetic dataset (random images and labels)
+input_images = torch.rand((batch_size, 3, 224, 224))
+labels = torch.randint(0, num_classes, (batch_size,))
+
+dataset = TensorDataset(input_images, labels)
+dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=2)
+
+# Load the model with the new 'weights=' syntax
+model = models.squeezenet1_1(weights='SqueezeNet1_1_Weights.IMAGENET1K_V1')
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001)
+
+# Initialize Accelerator with GPU and profiling
 profiler_kwargs = ProfileKwargs(
     activities=["cuda"],
     record_shapes=True,
     profile_memory=True
 )
 accelerator = Accelerator(cpu=False, kwargs_handlers=[profiler_kwargs])
-device = accelerator.device
 
-# Transformaciones de imagen
-transform = transforms.Compose([
-    transforms.Resize((224, 224)),
-    transforms.ToTensor(),
-])
+# Prepare model, optimizer, and dataloader for GPU execution with Accelerate
+model, optimizer, dataloader = accelerator.prepare(model, optimizer, dataloader)
 
-# Cargar CIFAR-10
-train_dataset = datasets.CIFAR10(root=dataset_path, train=True, transform=transform, download=True)
-train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=4, pin_memory=True, drop_last=True)
+model.train()
+device = accelerator.device  # Debería ser 'cuda' si hay GPU
 
-# Cargar modelo
-torch.backends.cudnn.benchmark = True  # Acelera GPU
-squeezenet = models.squeezenet1_1(pretrained=True).to(device)
-
-# Definir pérdida y optimizador
-criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(squeezenet.parameters(), lr=0.001)
-
-# Preparar con Accelerate
-train_loader, optimizer, squeezenet = accelerator.prepare(train_loader, optimizer, squeezenet)
-
-# Entrenamiento
-num_epochs = 1
+# Measure training time
 start_time = time.time()
 
+# Training loop with profiling
 with accelerator.profile() as prof:
     for epoch in range(num_epochs):
-        for X, y in train_loader:
+        running_loss = 0.0
+        for inputs, targets in dataloader:
             optimizer.zero_grad()
-            outputs = squeezenet(X)
-            loss = criterion(outputs, y)
+            outputs = model(inputs)
+            loss = criterion(outputs, targets)
             accelerator.backward(loss)
             optimizer.step()
+            running_loss += loss.item()
 
-# Medir tiempo
+        print(f"Epoch {epoch+1}, Loss: {running_loss / len(dataloader):.4f}")
+
+# Optional: free GPU cache
 torch.cuda.empty_cache()
+
 train_time = time.time() - start_time
 
-# Guardar resultados
-with open("squeezenet_train_gpu_results.txt", "w") as f:
-    f.write(f"Tiempo de entrenamiento: {train_time:.2f} segundos\n")
-    f.write("\nResumen del perfilado:\n")
+# Save results
+output_file = "../../outputs/train/squeezenet_train_gpu_results.txt"
+with open(output_file, "w") as f:
+    f.write(f"Training Time: {train_time:.2f} seconds\n")
+    f.write("\nProfiling Summary:\n")
     f.write(prof.key_averages().table(sort_by="cuda_time_total", row_limit=10))
+
+print(f"Training completed. Results saved to {output_file}")
