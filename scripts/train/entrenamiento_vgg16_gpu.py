@@ -2,69 +2,83 @@ import torch
 import torchvision.models as models
 from accelerate import Accelerator, ProfileKwargs
 import torchvision.transforms as transforms
-from torch.utils.data import DataLoader
-import torchvision.datasets as datasets
+from torch.utils.data import DataLoader, TensorDataset
 import torch.nn as nn
 import torch.optim as optim
 import yaml
 import time
 
-# Cargar configuración desde YAML
-with open("config_gpubase.yaml", "r") as f:
+# Load config from YAML 
+with open("home/estebanbecerraf/config/config_gpubase.yaml", "r") as f:
     config = yaml.safe_load(f)
 
-dataset_path = config.get("dataset_path", "./data")
-batch_size = config.get("batch_size", 32)
+# Ajusta parámetros de entrenamiento directamente
+batch_size = 128
+num_epochs = 1
+num_classes = 10
 
-# Inicializar `Accelerator` con configuración para GPU
+# Habilitar cuDNN benchmark para mejor rendimiento en GPU
+torch.backends.cudnn.benchmark = True
+
+# Definir transformaciones (incluye normalización)
+transform = transforms.Compose([
+    transforms.Resize((224, 224)),
+    transforms.ToTensor(),
+    transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                         std=[0.229, 0.224, 0.225])
+])
+
+# Generar datos sintéticos (imágenes y etiquetas aleatorias)
+input_images = torch.rand((batch_size, 3, 224, 224))
+labels = torch.randint(0, num_classes, (batch_size,))
+
+dataset = TensorDataset(input_images, labels)
+dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=2)
+
+# Cargar el modelo 
+model = models.vgg16(weights=models.VGG16_Weights.IMAGENET1K_V1)
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001)
+
+# Inicializar Accelerator con GPU y configurar perfilado
 profiler_kwargs = ProfileKwargs(
     activities=["cuda"],
     record_shapes=True,
     profile_memory=True
 )
 accelerator = Accelerator(cpu=False, kwargs_handlers=[profiler_kwargs])
-device = accelerator.device
 
-# Transformaciones de imagen
-transform = transforms.Compose([
-    transforms.Resize((224, 224)),
-    transforms.ToTensor(),
-])
+# Preparar el modelo, optimizador y dataloader para la GPU
+model, optimizer, dataloader = accelerator.prepare(model, optimizer, dataloader)
 
-# Cargar CIFAR-10
-train_dataset = datasets.CIFAR10(root=dataset_path, train=True, transform=transform, download=True)
-train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=4, pin_memory=True, drop_last=True)
+model.train()
+device = accelerator.device  # Será 'cuda' si hay GPU disponible
 
-# Cargar modelo
-torch.backends.cudnn.benchmark = True  # Acelera GPU
-vgg16 = models.vgg16(pretrained=True).to(device)
-
-# Definir pérdida y optimizador
-criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(vgg16.parameters(), lr=0.001)
-
-# Preparar con Accelerate
-train_loader, optimizer, vgg16 = accelerator.prepare(train_loader, optimizer, vgg16)
-
-# Entrenamiento
-num_epochs = 1
 start_time = time.time()
 
+# Entrenamiento con perfilado
 with accelerator.profile() as prof:
     for epoch in range(num_epochs):
-        for X, y in train_loader:
+        running_loss = 0.0
+        for inputs, targets in dataloader:
             optimizer.zero_grad()
-            outputs = vgg16(X)
-            loss = criterion(outputs, y)
+            outputs = model(inputs)
+            loss = criterion(outputs, targets)
             accelerator.backward(loss)
             optimizer.step()
+            running_loss += loss.item()
 
-# Medir tiempo
+        print(f"Epoch {epoch+1}, Loss: {running_loss / len(dataloader):.4f}")
+
+# Limpiar caché de la GPU 
 torch.cuda.empty_cache()
 train_time = time.time() - start_time
 
-# Guardar resultados
-with open("vgg16_train_gpu_results.txt", "w") as f:
-    f.write(f"Tiempo de entrenamiento: {train_time:.2f} segundos\n")
-    f.write("\nResumen del perfilado:\n")
+# Guardar resultados en un fichero
+output_file = "home/estebanbecerraf/outputs/train/vgg16_train_gpu_results.txt"
+with open(output_file, "w") as f:
+    f.write(f"Training Time: {train_time:.2f} seconds\n")
+    f.write("\nProfiling Summary:\n")
     f.write(prof.key_averages().table(sort_by="cuda_time_total", row_limit=10))
+
+print(f"Training completed. Results saved to {output_file}")
