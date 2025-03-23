@@ -1,0 +1,19 @@
+Training Time: 8.47 seconds
+
+Profiling Summary:
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg       CPU Mem  Self CPU Mem      CUDA Mem  Self CUDA Mem    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+void magma_sgemmEx_kernel<float, __nv_bfloat16, __nv...         0.00%       0.000us         0.00%       0.000us       0.000us        3.314s        44.17%        3.314s       1.988ms           0 b           0 b           0 b           0 b          1667  
+void magma_sgemmEx_kernel<float, __nv_bfloat16, __nv...         0.00%       0.000us         0.00%       0.000us       0.000us        1.785s        23.79%        1.785s       1.071ms           0 b           0 b           0 b           0 b          1667  
+void magma_sgemmEx_kernel<float, __nv_bfloat16, __nv...         0.00%       0.000us         0.00%       0.000us       0.000us        1.281s        17.07%        1.281s     832.328us           0 b           0 b           0 b           0 b          1539  
+void at::native::col2im_kernel<c10::BFloat16, float>...         0.00%       0.000us         0.00%       0.000us       0.000us     504.579ms         6.73%     504.579ms     328.502us           0 b           0 b           0 b           0 b          1536  
+void at::native::im2col_kernel<c10::BFloat16>(long, ...         0.00%       0.000us         0.00%       0.000us       0.000us     337.226ms         4.50%     337.226ms     101.330us           0 b           0 b           0 b           0 b          3328  
+void at::native::(anonymous namespace)::max_pool_bac...         0.00%       0.000us         0.00%       0.000us       0.000us      48.961ms         0.65%      48.961ms       9.792ms           0 b           0 b           0 b           0 b             5  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      40.747ms         0.54%      40.747ms       2.716ms           0 b           0 b           0 b           0 b            15  
+                       Memcpy HtoD (Pageable -> Device)         0.00%       0.000us         0.00%       0.000us       0.000us      38.627ms         0.51%      38.627ms      19.313ms           0 b           0 b           0 b           0 b             2  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      27.528ms         0.37%      27.528ms       1.835ms           0 b           0 b           0 b           0 b            15  
+void at::native::elementwise_kernel<128, 4, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us      24.936ms         0.33%      24.936ms       1.918ms           0 b           0 b           0 b           0 b            13  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 7.867s
+Self CUDA time total: 7.502s
