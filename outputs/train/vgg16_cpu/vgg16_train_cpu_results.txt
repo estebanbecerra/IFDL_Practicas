@@ -1,0 +1,18 @@
+Training Time: 196.27 seconds
+
+Profiling Summary:
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg       CPU Mem  Self CPU Mem    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+autograd::engine::evaluate_function: ConvolutionBack...         0.13%     257.081ms        64.80%      127.133s        9.779s      -1.50 Gb      -3.65 Gb            13  
+                                   ConvolutionBackward0         0.00%     632.207us        64.67%      126.876s        9.760s       2.16 Gb           0 b            13  
+                             aten::convolution_backward        64.67%      126.875s        64.67%      126.876s        9.760s       2.16 Gb           0 b            13  
+                                           aten::conv2d         0.00%     581.972us        61.88%      121.408s        4.670s       6.52 Gb           0 b            26  
+                                      aten::convolution         0.00%     515.071us        30.93%       60.688s        4.668s       3.23 Gb           0 b            13  
+                                     aten::_convolution         0.00%     326.019us        30.93%       60.688s        4.668s       3.23 Gb           0 b            13  
+                               aten::mkldnn_convolution        30.93%       60.687s        30.93%       60.687s        4.668s       3.23 Gb           0 b            13  
+                                       aten::max_pool2d         0.00%      78.083us         1.20%        2.349s     469.733ms       1.82 Gb           0 b             5  
+                          aten::max_pool2d_with_indices         1.20%        2.349s         1.20%        2.349s     469.717ms       1.82 Gb       1.82 Gb             5  
+     autograd::engine::evaluate_function: ReluBackward0         0.21%     405.192ms         0.79%        1.558s     103.893ms      -3.23 Gb      -6.46 Gb            15  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 196.184s
