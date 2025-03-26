@@ -1,0 +1,19 @@
+Inference Time: 5.0669 seconds
+
+Profiling Summary:
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg       CPU Mem  Self CPU Mem      CUDA Mem  Self CUDA Mem    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+void magma_sgemmEx_kernel<float, __nv_bfloat16, __nv...         0.00%       0.000us         0.00%       0.000us       0.000us        3.259s        87.23%        3.259s     163.210us           0 b           0 b           0 b           0 b         19968  
+void at::native::batch_norm_transform_input_kernel<c...         0.00%       0.000us         0.00%       0.000us       0.000us     106.982ms         2.86%     106.982ms     493.005us           0 b           0 b           0 b           0 b           217  
+void at::native::im2col_kernel<c10::BFloat16>(long, ...         0.00%       0.000us         0.00%       0.000us       0.000us      84.533ms         2.26%      84.533ms      34.759us           0 b           0 b           0 b           0 b          2432  
+void at::native::(anonymous namespace)::conv_depthwi...         0.00%       0.000us         0.00%       0.000us       0.000us      71.466ms         1.91%      71.466ms       1.172ms           0 b           0 b           0 b           0 b            61  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      63.616ms         1.70%      63.616ms     313.380us           0 b           0 b           0 b           0 b           203  
+std::enable_if<!(false), void>::type internal::gemvx...         0.00%       0.000us         0.00%       0.000us       0.000us      28.689ms         0.77%      28.689ms       4.151us           0 b           0 b           0 b           0 b          6912  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      26.306ms         0.70%      26.306ms     168.631us           0 b           0 b           0 b           0 b           156  
+void at::native::elementwise_kernel<128, 4, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us      25.337ms         0.68%      25.337ms     415.353us           0 b           0 b           0 b           0 b            61  
+void at::native::reduce_kernel<512, 1, at::native::R...         0.00%       0.000us         0.00%       0.000us       0.000us      21.572ms         0.58%      21.572ms     347.930us           0 b           0 b           0 b           0 b            62  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      14.868ms         0.40%      14.868ms     203.670us           0 b           0 b           0 b           0 b            73  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 3.609s
+Self CUDA time total: 3.736s
