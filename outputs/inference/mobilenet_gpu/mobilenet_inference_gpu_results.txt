@@ -1,0 +1,19 @@
+Tiempo de inferencia: 0.4942 segundos
+
+Resumen del perfilado:
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg       CPU Mem  Self CPU Mem      CUDA Mem  Self CUDA Mem    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+void magma_sgemmEx_kernel<float, __nv_bfloat16, __nv...         0.00%       0.000us         0.00%       0.000us       0.000us      97.794ms        81.52%      97.794ms      87.316us           0 b           0 b           0 b           0 b          1120  
+void at::native::(anonymous namespace)::conv_depthwi...         0.00%       0.000us         0.00%       0.000us       0.000us       9.100ms         7.59%       9.100ms     535.309us           0 b           0 b           0 b           0 b            17  
+void at::native::batch_norm_transform_input_kernel<c...         0.00%       0.000us         0.00%       0.000us       0.000us       6.911ms         5.76%       6.911ms     132.911us           0 b           0 b           0 b           0 b            52  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us       3.198ms         2.67%       3.198ms      91.369us           0 b           0 b           0 b           0 b            35  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us       1.219ms         1.02%       1.219ms      34.817us           0 b           0 b           0 b           0 b            35  
+void magma_sgemmEx_kernel<float, __nv_bfloat16, __nv...         0.00%       0.000us         0.00%       0.000us       0.000us     430.677us         0.36%     430.677us     430.677us           0 b           0 b           0 b           0 b             1  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     358.901us         0.30%     358.901us       6.525us           0 b           0 b           0 b           0 b            55  
+void at::native::im2col_kernel<c10::BFloat16>(long, ...         0.00%       0.000us         0.00%       0.000us       0.000us     345.880us         0.29%     345.880us      10.809us           0 b           0 b           0 b           0 b            32  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us     169.148us         0.14%     169.148us       3.253us           0 b           0 b           0 b           0 b            52  
+                         Memcpy DtoD (Device -> Device)         0.00%       0.000us         0.00%       0.000us       0.000us     154.878us         0.13%     154.878us       2.978us           0 b           0 b           0 b           0 b            52  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 292.046ms
+Self CUDA time total: 119.957ms

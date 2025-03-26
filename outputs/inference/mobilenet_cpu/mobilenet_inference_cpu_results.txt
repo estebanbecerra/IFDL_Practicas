@@ -1,0 +1,18 @@
+Tiempo de inferencia: 1.0921 segundos
+
+Resumen del perfilado:
+--------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                            Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg       CPU Mem  Self CPU Mem    # of Calls  
+--------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                    aten::conv2d         0.52%       5.276ms       166.48%        1.700s      16.344ms     819.38 Mb      -9.19 Mb           104  
+               aten::convolution         0.06%     597.688us        82.16%     838.870ms      16.132ms     407.60 Mb           0 b            52  
+              aten::_convolution         0.08%     776.030us        82.10%     838.272ms      16.121ms     407.60 Mb           0 b            52  
+        aten::mkldnn_convolution        81.90%     836.204ms        82.03%     837.496ms      16.106ms     407.60 Mb           0 b            52  
+                aten::batch_norm         0.03%     268.725us         7.63%      77.903ms       1.498ms     407.60 Mb           0 b            52  
+    aten::_batch_norm_impl_index         0.07%     750.851us         7.60%      77.634ms       1.493ms     407.60 Mb           0 b            52  
+         aten::native_batch_norm         7.43%      75.839ms         7.51%      76.678ms       1.475ms     407.60 Mb    -133.25 Kb            52  
+                    aten::linear         0.11%       1.112ms         6.27%      64.045ms      32.022ms       2.57 Mb           0 b             2  
+                 aten::hardtanh_         0.24%       2.491ms         4.20%      42.866ms       1.225ms           0 b           0 b            35  
+                  aten::hardtanh         0.02%     230.083us         3.95%      40.375ms       1.154ms           0 b           0 b            35  
+--------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 1.021s
