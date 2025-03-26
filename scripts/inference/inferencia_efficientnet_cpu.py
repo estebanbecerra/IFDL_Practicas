@@ -2,7 +2,7 @@ import torch
 import torchvision.models as models
 from accelerate import Accelerator, ProfileKwargs
 import torchvision.transforms as transforms
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, TensorDataset
 import torchvision.datasets as datasets
 import yaml
 import time
@@ -54,7 +54,7 @@ end_time = time.time()
 inference_time = end_time - start_time
 
 # Guardar resultados
-with open("efficientnet_inference_cpu_results.txt", "w") as f:
+with open("../../outputs/inference/efficientnet_inference_cpu_results.txt", "w") as f:
     f.write(f"Tiempo de inferencia: {inference_time:.4f} segundos\n")
     f.write("\nResumen del perfilado:\n")
     f.write(prof.key_averages().table(sort_by="cpu_time_total", row_limit=10))
