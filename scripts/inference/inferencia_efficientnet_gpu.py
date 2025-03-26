@@ -7,12 +7,32 @@ import torchvision.datasets as datasets
 import yaml
 import time
 
-# Cargar configuración desde YAML
-with open("config_gpubase.yaml", "r") as f:
+with open("/home/estebanbecerraf/config/config_gpubase.yaml", "r") as f:
     config = yaml.safe_load(f)
 
-dataset_path = config.get("dataset_path", "./data")
-batch_size = config.get("batch_size", 32)
+# Define experiment parameters directly in the script
+batch_size = 128      
+num_epochs = 1        
+num_classes = 10     
+dataset_path = "./data"  
+
+# Enable cuDNN autotuner for performance
+torch.backends.cudnn.benchmark = True
+
+# Image transformations (incluye normalización típica de ImageNet)
+transform = transforms.Compose([
+    transforms.Resize((224, 224)),
+    transforms.ToTensor(),
+    transforms.Normalize(mean=[0.485, 0.456, 0.406],
+                         std=[0.229, 0.224, 0.225])
+])
+
+# Generate synthetic dataset (random images and labels)
+input_images = torch.rand((batch_size, 3, 224, 224))
+labels = torch.randint(0, num_classes, (batch_size,))
+
+dataset = TensorDataset(input_images, labels)
+dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=2)
 
 # Inicializar `Accelerator` con configuración para GPU
 profiler_kwargs = ProfileKwargs(
@@ -22,16 +42,6 @@ profiler_kwargs = ProfileKwargs(
 )
 accelerator = Accelerator(cpu=False, kwargs_handlers=[profiler_kwargs])
 device = accelerator.device
-
-# Transformaciones de imagen
-transform = transforms.Compose([
-    transforms.Resize((224, 224)),
-    transforms.ToTensor(),
-])
-
-# Cargar CIFAR-10
-test_dataset = datasets.CIFAR10(root=dataset_path, train=False, transform=transform, download=True)
-test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=4, pin_memory=True)
 
 # Cargar EfficientNet preentrenado
 efficientnet = models.efficientnet_v2_l(pretrained=True)
