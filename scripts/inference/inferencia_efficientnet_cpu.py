@@ -45,11 +45,6 @@ efficientnet = models.efficientnet_v2_l(pretrained=True)
 efficientnet = accelerator.prepare(efficientnet.to(device))
 efficientnet.eval()
 
-# Obtener un batch
-data_iter = iter(test_loader)
-input_tensor, _ = next(data_iter)
-input_tensor = input_tensor.to(device)
-
 # Medir inferencia
 start_time = time.time()
 with accelerator.profile() as prof, torch.no_grad():
