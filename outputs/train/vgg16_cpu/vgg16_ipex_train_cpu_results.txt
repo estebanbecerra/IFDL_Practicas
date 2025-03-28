@@ -1,0 +1,18 @@
+Training Time: 199.20 seconds
+
+Profiling Summary:
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg       CPU Mem  Self CPU Mem    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+autograd::engine::evaluate_function: torch::autograd...         0.01%      26.641ms        67.81%      135.005s       10.385s      -1.47 Gb    -404.25 Mb            13  
+torch::autograd::CppNode<torch_ipex::cpu::IPEXConvol...         0.13%     257.559ms        67.79%      134.978s       10.383s      -1.07 Gb      -3.23 Gb            13  
+                            IPEXConvolutionOp::backward         0.00%     325.984us        67.66%      134.720s       10.363s       2.16 Gb           0 b            13  
+                       torch_ipex::convolution_backward        67.66%      134.712s        67.66%      134.720s       10.363s       2.16 Gb     -36.75 Mb            13  
+                        torch_ipex::convolution_forward         0.00%       1.181ms        59.10%      117.662s        4.358s       7.26 Gb           0 b            27  
+                             IPEXConvolutionOp::forward         0.00%     127.970us        29.34%       58.417s        4.494s       3.23 Gb           0 b            13  
+                            IPEXConvolutionOp::_forward         0.00%      61.831us        29.34%       58.416s        4.494s       3.23 Gb           0 b            13  
+                   torch_ipex::convolution_forward_impl        29.33%       58.392s        29.34%       58.416s        4.494s       3.23 Gb     -36.75 Mb            13  
+     autograd::engine::evaluate_function: ReluBackward0         0.19%     369.865ms         0.77%        1.541s     102.765ms      -3.23 Gb      -6.46 Gb            15  
+autograd::engine::evaluate_function: torch::autograd...         0.00%     134.834us         0.65%        1.295s     431.545ms     233.59 Mb      -8.12 Mb             3  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 199.105s
