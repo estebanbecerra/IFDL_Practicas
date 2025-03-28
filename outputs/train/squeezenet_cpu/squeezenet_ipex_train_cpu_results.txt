@@ -1,0 +1,18 @@
+Training Time: 8.14 seconds
+
+Profiling Summary:
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg       CPU Mem  Self CPU Mem    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+autograd::engine::evaluate_function: torch::autograd...         0.17%      13.808ms        60.98%        4.911s     188.870ms    -622.28 Mb    -375.66 Mb            26  
+torch::autograd::CppNode<torch_ipex::cpu::IPEXConvol...         0.36%      28.912ms        60.71%        4.889s     188.040ms    -246.63 Mb    -632.17 Mb            26  
+                            IPEXConvolutionOp::backward         0.01%     559.702us        60.35%        4.860s     186.928ms     385.54 Mb           0 b            26  
+                       torch_ipex::convolution_backward        60.02%        4.833s        60.34%        4.860s     186.907ms     385.54 Mb     -36.75 Mb            26  
+                        torch_ipex::convolution_forward         0.03%       2.157ms        47.75%        3.846s      72.561ms       1.46 Gb           0 b            53  
+                             IPEXConvolutionOp::forward         0.00%     226.554us        22.22%        1.790s      68.838ms     632.17 Mb           0 b            26  
+                            IPEXConvolutionOp::_forward         0.00%     130.374us        22.22%        1.790s      68.830ms     632.17 Mb           0 b            26  
+                   torch_ipex::convolution_forward_impl        21.88%        1.762s        22.22%        1.789s      68.813ms     632.17 Mb     -36.75 Mb            26  
+     autograd::engine::evaluate_function: ReluBackward0         0.62%      50.260ms         5.03%     404.768ms      15.568ms    -632.17 Mb      -1.23 Gb            26  
+                                          ReluBackward0         0.01%     507.959us         4.40%     354.507ms      13.635ms     632.17 Mb           0 b            26  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 8.053s
