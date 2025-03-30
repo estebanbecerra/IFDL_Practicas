@@ -1,0 +1,19 @@
+Training Time: 2.59 seconds
+
+Profiling Summary:
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg       CPU Mem  Self CPU Mem      CUDA Mem  Self CUDA Mem    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                       Memcpy HtoD (Pageable -> Device)         0.00%       0.000us         0.00%       0.000us       0.000us      39.747ms        19.56%      39.747ms      19.874ms           0 b           0 b           0 b           0 b             2  
+void at::native::(anonymous namespace)::max_pool_bac...         0.00%       0.000us         0.00%       0.000us       0.000us      28.851ms        14.20%      28.851ms       9.617ms           0 b           0 b           0 b           0 b             3  
+void cudnn::engines_precompiled::nchwToNhwcKernel<__...         0.00%       0.000us         0.00%       0.000us       0.000us      15.111ms         7.44%      15.111ms     218.999us           0 b           0 b           0 b           0 b            69  
+void at::native::elementwise_kernel<128, 4, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us      11.282ms         5.55%      11.282ms     433.904us           0 b           0 b           0 b           0 b            26  
+void cutlass::Kernel2<cutlass_75_wmma_tensorop_f16_s...         0.00%       0.000us         0.00%       0.000us       0.000us       8.635ms         4.25%       8.635ms       1.727ms           0 b           0 b           0 b           0 b             5  
+void at::native::(anonymous namespace)::max_pool_for...         0.00%       0.000us         0.00%       0.000us       0.000us       8.324ms         4.10%       8.324ms       2.775ms           0 b           0 b           0 b           0 b             3  
+void cutlass::Kernel2<cutlass_75_wmma_tensorop_f16_s...         0.00%       0.000us         0.00%       0.000us       0.000us       7.176ms         3.53%       7.176ms       1.196ms           0 b           0 b           0 b           0 b             6  
+void at::native::elementwise_kernel<128, 4, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us       6.583ms         3.24%       6.583ms     411.429us           0 b           0 b           0 b           0 b            16  
+sm75_xmma_dgrad_implicit_gemm_f16f16_f16f32_f32_nhwc...         0.00%       0.000us         0.00%       0.000us       0.000us       5.758ms         2.83%       5.758ms       1.440ms           0 b           0 b           0 b           0 b             4  
+void at::native::reduce_kernel<512, 1, at::native::R...         0.00%       0.000us         0.00%       0.000us       0.000us       5.331ms         2.62%       5.331ms     205.051us           0 b           0 b           0 b           0 b            26  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 1.225s
+Self CUDA time total: 203.223ms

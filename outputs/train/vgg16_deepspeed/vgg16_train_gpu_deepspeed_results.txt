@@ -1,0 +1,19 @@
+Training Time: 2.58 seconds
+
+Profiling Summary:
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg       CPU Mem  Self CPU Mem      CUDA Mem  Self CUDA Mem    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+sm75_xmma_fprop_implicit_gemm_f16f16_f16f32_f32_nhwc...         0.00%       0.000us         0.00%       0.000us       0.000us     103.801ms        11.52%     103.801ms      11.533ms           0 b           0 b           0 b           0 b             9  
+void cudnn::engines_precompiled::nchwToNhwcKernel<__...         0.00%       0.000us         0.00%       0.000us       0.000us     103.170ms        11.45%     103.170ms       1.394ms           0 b           0 b           0 b           0 b            74  
+sm75_xmma_dgrad_implicit_gemm_f16f16_f16f32_f32_nhwc...         0.00%       0.000us         0.00%       0.000us       0.000us      86.555ms         9.61%      86.555ms       8.656ms           0 b           0 b           0 b           0 b            10  
+sm75_xmma_wgrad_implicit_gemm_indexed_f16f16_f16f32_...         0.00%       0.000us         0.00%       0.000us       0.000us      72.259ms         8.02%      72.259ms      12.043ms           0 b           0 b           0 b           0 b             6  
+void at::native::(anonymous namespace)::max_pool_bac...         0.00%       0.000us         0.00%       0.000us       0.000us      58.889ms         6.54%      58.889ms      11.778ms           0 b           0 b           0 b           0 b             5  
+void at::native::elementwise_kernel<128, 4, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us      54.976ms         6.10%      54.976ms       4.229ms           0 b           0 b           0 b           0 b            13  
+_5x_cudnn_turing_fp16_s1688cudnn_fp16_256x64_sliced1...         0.00%       0.000us         0.00%       0.000us       0.000us      46.196ms         5.13%      46.196ms      23.098ms           0 b           0 b           0 b           0 b             2  
+void cudnn::engines_precompiled::nhwcToNchwKernel<__...         0.00%       0.000us         0.00%       0.000us       0.000us      45.565ms         5.06%      45.565ms       1.231ms           0 b           0 b           0 b           0 b            37  
+                       Memcpy HtoD (Pageable -> Device)         0.00%       0.000us         0.00%       0.000us       0.000us      42.425ms         4.71%      42.425ms      21.212ms           0 b           0 b           0 b           0 b             2  
+void at::native::vectorized_elementwise_kernel<4, at...         0.00%       0.000us         0.00%       0.000us       0.000us      40.349ms         4.48%      40.349ms       2.690ms           0 b           0 b           0 b           0 b            15  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 1.456s
+Self CUDA time total: 901.072ms
