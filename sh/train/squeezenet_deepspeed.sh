@@ -10,5 +10,5 @@
 #SBATCH --output=../../outputs/train/squeezenet_deepspeed_%j.log
 
 apptainer exec --writable-tmpfs --nv /software/singularity/Informatica/mia-idl-apptainer/mia_idl_2.2.sif \
-    deepspeed ../../scripts/train/train_squeezenet_deepspeed.py \
+    deepspeed ../../scripts/train/entrenamiento_squeezenet_deepspeed.py \
     --deepspeed --deepspeed_config ../../config/deepspeed_config.json
