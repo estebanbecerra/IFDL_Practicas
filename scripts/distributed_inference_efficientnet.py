@@ -94,5 +94,4 @@ if accelerator.is_main_process:
 else:
     print(f"Inference completed on rank {accelerator.process_index}")
 
-# Limpieza (opcional)
 accelerator.end_training()
