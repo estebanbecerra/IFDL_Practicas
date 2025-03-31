@@ -7,7 +7,7 @@ import yaml
 import time
 
 # Cargar configuración desde YAML 
-with open("/home/estebanbecerraf/config/config_gpubase.yaml", "r") as f:
+with open("../../config/config_gpubase.yaml", "r") as f:
     config = yaml.safe_load(f)
 
 # Parámetros del experimento 
@@ -62,7 +62,8 @@ end_time = time.time()
 inference_time = end_time - start_time
 
 # Guardar resultados en fichero
-output_file = "/home/estebanbecerraf/outputs/train/efficientnet_inference_gpu_results.txt"
+
+output_file = "../../outputs/inference/efficientnet_gpu/efficientnet_inference_gpu_results.txt"
 with open(output_file, "w") as f:
     f.write(f"Inference Time: {inference_time:.4f} seconds\n")
     f.write("\nProfiling Summary:\n")
