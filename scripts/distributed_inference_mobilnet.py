@@ -20,7 +20,7 @@ accelerator = Accelerator(cpu=False, kwargs_handlers=[profiler_kwargs])
 device = accelerator.device
 
 # Cargar configuración desde YAML 
-with open("/home/estebanbecerraf/config/config_gpubase.yaml", "r") as f:
+with open("../../config/config_gpubase.yaml", "r") as f:
     config = yaml.safe_load(f)
 
 # Parámetros del experimento 
