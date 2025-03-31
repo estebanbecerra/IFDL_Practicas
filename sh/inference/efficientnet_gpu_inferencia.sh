@@ -7,9 +7,9 @@
 #SBATCH --ntasks=1
 #SBATCH --time=10:00:00
 #SBATCH --job-name=efficientnet_gpu # Nombre del job
-#SBATCH --output=/home/estebanbecerraf/outputs/train/efficientnet_gpu_%j.log # Archivo de salida
+#SBATCH --output=../../outputs/inference/efficientnet_gpu/efficientnet_gpu_%j.log # Archivo de salida
 
-# Ejecutar el código Python dentro del contenedor Apptainer
-apptainer exec --writable-tmpfs --nv /software/singularity/Informatica/mia-idl-apptainer/mia_idl_2.1.sif \
-    accelerate launch --config_file /home/estebanbecerraf/config/config_gpubase.yaml \
-    /home/estebanbecerraf/scripts/inference/inferencia_efficientnet_gpu.py
+# Ejecutar el cÃ³digo Python dentro del contenedor Apptainer
+apptainer exec --writable-tmpfs --nv /software/singularity/Informatica/mia-idl-apptainer/mia_idl_2.2.sif \
+    accelerate launch --config_file ../../config/config_gpubase.yaml \
+    ../../scripts/inference/inferencia_efficientnet_gpu.py
