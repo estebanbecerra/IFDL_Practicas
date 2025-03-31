@@ -1,0 +1,15 @@
+/opt/conda/lib/python3.12/site-packages/torch/cuda/__init__.py:734: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+2025-03-31 16:10:33,931 - launch.py - accelerate.commands.launch - WARNING - The following values were not passed to `accelerate launch` and had defaults used instead:
+	`--num_cpu_threads_per_process` was set to `2` to improve out-of-box performance when training on CPUs
+To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
+/opt/conda/lib/python3.12/site-packages/torch/cuda/__init__.py:734: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+Detected kernel version 3.10.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
+/opt/conda/lib/python3.12/site-packages/torch/cuda/__init__.py:734: UserWarning: Can't initialize NVML
+  warnings.warn("Can't initialize NVML")
+IPEX optimization applied.
+ERROR:2025-03-31 16:10:55 2592:2592 DeviceProperties.cpp:47] gpuGetDeviceCount failed with code 100
+Inferencia completada. Tiempo: 7.2995 segundos

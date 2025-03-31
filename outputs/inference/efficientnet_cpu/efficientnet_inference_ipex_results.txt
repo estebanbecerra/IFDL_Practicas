@@ -1,0 +1,18 @@
+Tiempo de inferencia: 7.2995 segundos
+
+Resumen del perfilado:
+----------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                    Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg       CPU Mem  Self CPU Mem    # of Calls  
+----------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+         torch_ipex::convolution_forward         0.09%       6.608ms       164.89%       11.562s      17.053ms       8.23 Gb           0 b           678  
+             IPEXConvolutionOp::_forward         0.06%       4.287ms        82.45%        5.781s      17.054ms       4.11 Gb           0 b           339  
+    torch_ipex::convolution_forward_impl        81.86%        5.740s        82.34%        5.774s      17.032ms       4.11 Gb     -18.38 Mb           339  
+                             aten::silu_        11.26%     789.909ms        11.26%     789.909ms       3.891ms           0 b           0 b           203  
+                               aten::add         2.48%     174.015ms         2.48%     174.015ms       2.384ms     614.03 Mb     614.03 Mb            73  
+                               aten::mul         1.66%     116.505ms         1.66%     116.505ms       1.910ms       1.24 Gb       1.24 Gb            61  
+               aten::adaptive_avg_pool2d         0.03%       2.072ms         1.55%     108.611ms       1.752ms      14.15 Mb           0 b            62  
+                              aten::mean         0.03%       2.035ms         1.51%     105.745ms       1.706ms      14.15 Mb         -16 b            62  
+                               aten::sum         0.01%     618.933us         1.41%      98.560ms       1.590ms      14.15 Mb           0 b            62  
+                 torch_ipex::sum_out_cpu         1.32%      92.860ms         1.40%      97.941ms       1.580ms      14.15 Mb           0 b            62  
+----------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 7.012s
