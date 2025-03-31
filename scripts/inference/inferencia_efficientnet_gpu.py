@@ -11,7 +11,7 @@ with open("/home/estebanbecerraf/config/config_gpubase.yaml", "r") as f:
     config = yaml.safe_load(f)
 
 # Parámetros del experimento 
-batch_size = 128      
+batch_size = 32      
 num_classes = 10     
 dataset_path = "./data"  
 
