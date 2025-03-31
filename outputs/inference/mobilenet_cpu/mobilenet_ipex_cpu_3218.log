@@ -1,17 +1,0 @@
-/opt/conda/lib/python3.12/site-packages/torch/cuda/__init__.py:734: UserWarning: Can't initialize NVML
-  warnings.warn("Can't initialize NVML")
-No CUDA runtime is found, using CUDA_HOME='/usr/local/cuda'
-2025-03-28 16:30:46,370 - launch.py - accelerate.commands.launch - WARNING - The following values were not passed to `accelerate launch` and had defaults used instead:
-	`--num_cpu_threads_per_process` was set to `2` to improve out-of-box performance when training on CPUs
-To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
-/opt/conda/lib/python3.12/site-packages/torch/cuda/__init__.py:734: UserWarning: Can't initialize NVML
-  warnings.warn("Can't initialize NVML")
-Detected kernel version 3.10.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
-/opt/conda/lib/python3.12/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
-  warnings.warn(
-/opt/conda/lib/python3.12/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=MobileNet_V2_Weights.IMAGENET1K_V1`. You can also use `weights=MobileNet_V2_Weights.DEFAULT` to get the most up-to-date weights.
-  warnings.warn(msg)
-Downloading: "https://download.pytorch.org/models/mobilenet_v2-b0353104.pth" to /home/estebanbecerraf/.cache/torch/hub/checkpoints/mobilenet_v2-b0353104.pth
-  0%|          | 0.00/13.6M [00:00<?, ?B/s] 51%|█████     | 6.88M/13.6M [00:00<00:00, 72.0MB/s]100%|██████████| 13.6M/13.6M [00:00<00:00, 67.8MB/s]
-ERROR:2025-03-28 16:30:52 2976:2976 DeviceProperties.cpp:47] gpuGetDeviceCount failed with code 100
-Inferencia completada. Tiempo: 0.9755 segundos
