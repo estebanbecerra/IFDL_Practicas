@@ -1,0 +1,20 @@
+Modelo: squeezenet1_1
+Número total de parámetros: 1,235,496
+Uso de memoria (FP32): 4.71 MB (0.00 GB)
+Uso de memoria (FP16): 2.36 MB (0.00 GB)
+----------------------------------------
+Modelo: vgg16
+Número total de parámetros: 138,357,544
+Uso de memoria (FP32): 527.79 MB (0.52 GB)
+Uso de memoria (FP16): 263.90 MB (0.26 GB)
+----------------------------------------
+Modelo: efficientnet_v2_l
+Número total de parámetros: 118,515,272
+Uso de memoria (FP32): 452.10 MB (0.44 GB)
+Uso de memoria (FP16): 226.05 MB (0.22 GB)
+----------------------------------------
+Modelo: mobilenet_v2
+Número total de parámetros: 3,504,872
+Uso de memoria (FP32): 13.37 MB (0.01 GB)
+Uso de memoria (FP16): 6.69 MB (0.01 GB)
+----------------------------------------
