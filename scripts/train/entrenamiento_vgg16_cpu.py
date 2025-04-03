@@ -9,7 +9,7 @@ import yaml
 import time
 
 # Cargar YAML 
-with open("/home/estebanbecerraf/config/config_cpubase.yaml", "r") as f:
+with open("../../config/config_cpubase.yaml", "r") as f:
     config = yaml.safe_load(f)
 
 # Definir parámetros de entrenamiento 
@@ -70,7 +70,7 @@ with accelerator.profile() as prof:
 train_time = time.time() - start_time
 
 # Guardar resultados en fichero
-output_file = "/home/estebanbecerraf/outputs/train/vgg16_train_cpu_results.txt"
+output_file = "../../outputs/train/vgg16_train_cpu_results.txt"
 with open(output_file, "w") as f:
     f.write(f"Training Time: {train_time:.2f} seconds\n")
     f.write("\nProfiling Summary:\n")

@@ -9,7 +9,7 @@ import yaml
 import time
 
 # Load config from YAML 
-with open("/home/estebanbecerraf/config/config_gpubase.yaml", "r") as f:
+with open("../../config/config_gpubase.yaml", "r") as f:
     config = yaml.safe_load(f)
 
 # Ajusta parámetros de entrenamiento directamente
@@ -75,7 +75,7 @@ torch.cuda.empty_cache()
 train_time = time.time() - start_time
 
 # Guardar resultados en un fichero
-output_file = "/home/estebanbecerraf/outputs/train/vgg16_train_gpu_results.txt"
+output_file = "../../outputs/train/vgg16_train_gpu_results.txt"
 with open(output_file, "w") as f:
     f.write(f"Training Time: {train_time:.2f} seconds\n")
     f.write("\nProfiling Summary:\n")
